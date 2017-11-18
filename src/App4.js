@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Route } from 'react-router-dom';
 import * as BooksAPI from './BooksAPI';
 import BookRow from './BookRow';
+import SearchResultBookRow from './SearchResultBookRow';
 import SearchButton from './SearchButton';
 import SearchBar from './SearchBar';
 import './App.css';
@@ -137,12 +138,12 @@ class BooksApp4 extends Component {
                 closeSearch={this.closeSearch}
                 search={this.search}
               />
-              <BookRow
+              <SearchResultBookRow
                 myReads=""
                 shelfTitle="Search Results"
                 shelf={this.state.searchResults}
                 changeBookshelf={this.changeBookshelf}
-                selectedValue='none'
+                selectedValue=''
               />
             </div>
         )}/>

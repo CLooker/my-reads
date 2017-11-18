@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-// import { Route } from 'react-router-dom';
+import { Route } from 'react-router-dom';
 import * as BooksAPI from './BooksAPI';
 import BookRow from './BookRow';
 import SearchButton from './SearchButton';
@@ -13,38 +13,44 @@ class BooksApp4 extends Component {
     currentlyReading: [],
     wantToRead: [],
     read: [],
-    searchState: false,
     searchResults: []
   }
 
+  getShelfAndRender = () => {
+      BooksAPI.getAll().then((booksReturn) => {
+        let shelfTemp = [],
+            currentlyReadingTemp = [],
+            wantToReadTemp = [],
+            readTemp = [];
+        booksReturn.forEach(bookObj => {
+          switch (bookObj.shelf) {
+            case "currentlyReading":
+              shelfTemp.push(bookObj);
+              currentlyReadingTemp.push(bookObj);
+              break;
+            case "wantToRead":
+              shelfTemp.push(bookObj);
+              wantToReadTemp.push(bookObj);
+              break;
+            case "read":
+              shelfTemp.push(bookObj);
+              readTemp.push(bookObj);
+              break;
+            default:
+              break;
+          }
+        });
+        this.setState({
+          shelf: shelfTemp,
+          currentlyReading: currentlyReadingTemp,
+          wantToRead: wantToReadTemp,
+          read: readTemp
+        });
+      });
+    }
+
   componentDidMount() {
-    BooksAPI.getAll().then((booksReturn) => {
-      let shelfTemp = [],
-          currentlyReadingTemp = [],
-          wantToReadTemp = [],
-          readTemp = [];
-      booksReturn.map(bookObj => {
-        switch (bookObj.shelf) {
-          case "currentlyReading":
-            shelfTemp.push(bookObj);
-            return currentlyReadingTemp.push(bookObj);
-          case "wantToRead":
-            shelfTemp.push(bookObj);
-            return wantToReadTemp.push(bookObj);
-          case "read":
-            shelfTemp.push(bookObj);
-            return readTemp.push(bookObj);
-          default:
-            break;
-        }
-      });
-      this.setState({
-        shelf: shelfTemp,
-        currentlyReading: currentlyReadingTemp,
-        wantToRead: wantToReadTemp,
-        read: readTemp
-      });
-    });
+    this.getShelfAndRender();
   }
 
   changeBookshelf = (e) => {
@@ -54,7 +60,7 @@ class BooksApp4 extends Component {
           wantToReadTemp = [],
           readTemp = [],
           shelfKeyValueStore = {};
-      this.state.shelf.map((bookObj) => {
+      this.state.shelf.forEach((bookObj) => {
          shelfKeyValueStore[bookObj.id] = bookObj;
       });
       let bookIdMatrix = [
@@ -62,21 +68,21 @@ class BooksApp4 extends Component {
         updatedShelf.wantToRead,
         updatedShelf.read
       ];
-      bookIdMatrix.map(
+      bookIdMatrix.forEach(
         (bookIdArr, index) => {
           switch(index) {
             case 0:
-              bookIdArr.map(bookId => {
+              bookIdArr.forEach(bookId => {
                 currentlyReadingTemp.push(shelfKeyValueStore[bookId]);
               });
               break;
             case 1:
-              bookIdArr.map(bookId => {
+              bookIdArr.forEach(bookId => {
                 wantToReadTemp.push(shelfKeyValueStore[bookId]);
               });
               break;
             case 2:
-              bookIdArr.map(bookId => {
+              bookIdArr.forEach(bookId => {
                 readTemp.push(shelfKeyValueStore[bookId]);
               });
               break;
@@ -93,25 +99,27 @@ class BooksApp4 extends Component {
     });
   }
 
-  addBook = () => {
-    this.setState({searchState: true})
+  closeSearch = function(){
+    this.getShelfAndRender();
   }
 
-  closeSearch = () => {
-    this.setState({searchState: false})
+  resetSearch = () => {
+    this.setState({searchResults: []});
   }
 
   search = (query) => {
     if (query) {
       BooksAPI.search(query).then(queryReturned => {
-        if (queryReturned.error) {
-          this.setState({searchResults: []});
-        }
-        else if (queryReturned !== undefined) {
-          this.setState({searchResults: queryReturned});
-        }
-        else {
-          this.setState({searchResults: []});
+        switch(queryReturned.error || queryReturned !== undefined) {
+          case queryReturned.error:
+            this.setState({searchResults: []});
+            break;
+          case queryReturned !== undefined:
+            this.setState({searchResults: queryReturned});
+            break;
+          default:
+            this.setState({searchResults: []});
+            break;
         }
       });
     }
@@ -123,8 +131,7 @@ class BooksApp4 extends Component {
   render() {
     return (
       <div className="app">
-        {this.state.searchState ?
-          (
+        <Route path="/search" render={() => (
             <div>
               <SearchBar
                 closeSearch={this.closeSearch}
@@ -138,10 +145,9 @@ class BooksApp4 extends Component {
                 selectedValue='none'
               />
             </div>
-          )
-        :
-          (
-            <div>
+        )}/>
+        <Route exact path="/" render={() => (
+          <div>
               <BookRow
                 myReads="MyReads"
                 shelfTitle="Currently Reading"
@@ -163,10 +169,9 @@ class BooksApp4 extends Component {
                 changeBookshelf={this.changeBookshelf}
                 selectedValue='read'
               />
-              <SearchButton addBook={this.addBook}/>
+              <SearchButton resetSearch={this.resetSearch}/>
             </div>
-          )
-        }
+        )}/>
       </div>
     )
   }

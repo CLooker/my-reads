@@ -1,11 +1,14 @@
-import React, { Component } from 'react';
-import SearchBar from './SearchBar';
+import React from 'react';
+import { Link } from 'react-router-dom';
 import './App.css';
 
 const SearchButton = function(props) {
 	return (
 		<div className="open-search">
-      <a onClick={props.addBook}>Add a book</a>
+      <Link
+      	onClick={props.resetSearch}
+      	to="/search"
+      >Add a book</Link>
     </div>
   )
 }

@@ -63,7 +63,7 @@ const BookRow = function(props) {
                             ></div>
                             <div className="book-shelf-changer">
                               <select
-                                onChange={ props.changeBookshelf }
+                                onChange={props.changeBookshelf}
                                 value={props.selectedValue}
                                 data={book.id}
                               >

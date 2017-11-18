@@ -133,45 +133,45 @@ class BooksApp4 extends Component {
     return (
       <div className="app">
         <Route path="/search" render={() => (
-            <div>
-              <SearchBar
-                closeSearch={this.closeSearch}
-                search={this.search}
-              />
-              <SearchResultBookRow
-                myReads=""
-                shelfTitle="Search Results"
-                shelf={this.state.searchResults}
-                changeBookshelf={this.changeBookshelf}
-                selectedValue=''
-              />
-            </div>
+          <div>
+            <SearchBar
+              closeSearch={this.closeSearch}
+              search={this.search}
+            />
+            <SearchResultBookRow
+              myReads=""
+              shelfTitle="Search Results"
+              shelf={this.state.searchResults}
+              changeBookshelf={this.changeBookshelf}
+              selectedValue=''
+            />
+          </div>
         )}/>
         <Route exact path="/" render={() => (
           <div>
-              <BookRow
-                myReads="MyReads"
-                shelfTitle="Currently Reading"
-                shelf={this.state.currentlyReading}
-                changeBookshelf={this.changeBookshelf}
-                selectedValue='currentlyReading'
-                />
-              <BookRow
-                myReads=""
-                shelfTitle="Want To Read"
-                shelf={this.state.wantToRead}
-                changeBookshelf={this.changeBookshelf}
-                selectedValue='wantToRead'
-              />
-              <BookRow
-                myReads=""
-                shelfTitle="Read"
-                shelf={this.state.read}
-                changeBookshelf={this.changeBookshelf}
-                selectedValue='read'
-              />
-              <SearchButton resetSearch={this.resetSearch}/>
-            </div>
+            <BookRow
+              myReads="MyReads"
+              shelfTitle="Currently Reading"
+              shelf={this.state.currentlyReading}
+              changeBookshelf={this.changeBookshelf}
+              selectedValue='currentlyReading'
+            />
+            <BookRow
+              myReads=""
+              shelfTitle="Want To Read"
+              shelf={this.state.wantToRead}
+              changeBookshelf={this.changeBookshelf}
+              selectedValue='wantToRead'
+            />
+            <BookRow
+              myReads=""
+              shelfTitle="Read"
+              shelf={this.state.read}
+              changeBookshelf={this.changeBookshelf}
+              selectedValue='read'
+            />
+            <SearchButton resetSearch={this.resetSearch}/>
+          </div>
         )}/>
       </div>
     )

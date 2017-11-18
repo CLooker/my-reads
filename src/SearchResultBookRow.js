@@ -1,7 +1,7 @@
 import React from 'react';
 import './App.css';
 
-const BookRow = function(props) {
+const SearchBookRow = function(props) {
     return (
       <div className="list-books">
         <div className="list-books-title">
@@ -63,7 +63,7 @@ const BookRow = function(props) {
                             ></div>
                             <div className="book-shelf-changer">
                               <select
-                                onChange={ props.changeBookshelf }
+                                onChange={props.changeBookshelf}
                                 value={props.selectedValue}
                                 data={book.id}
                               >
@@ -90,4 +90,4 @@ const BookRow = function(props) {
     )
 }
 
-export default BookRow;
+export default SearchBookRow;

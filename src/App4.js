@@ -9,12 +9,15 @@ import './App.css';
 
 class BooksApp4 extends Component {
 
-  state = {
-    shelf: [],
-    currentlyReading: [],
-    wantToRead: [],
-    read: [],
-    searchResults: []
+  constructor(props) {
+    super(props);
+    this.state = {
+      shelf: [],
+      currentlyReading: [],
+      wantToRead: [],
+      read: [],
+      searchResults: []
+    }
   }
 
   getShelfAndRender = () => {
@@ -112,11 +115,34 @@ class BooksApp4 extends Component {
     if (query) {
       BooksAPI.search(query).then(queryReturned => {
         switch(queryReturned.error || queryReturned !== undefined) {
+
           case queryReturned.error:
             this.setState({searchResults: []});
             break;
+
           case queryReturned !== undefined:
-            this.setState({searchResults: queryReturned});
+            let shelfKeyValueStore = {},
+                queryReturnedKeyValueStore = {},
+                removeTheseBooks = [],
+                queryReturnedUpdated = [];
+            this.state.shelf.forEach((bookObj) => {
+               shelfKeyValueStore[bookObj.id] = bookObj;
+            });
+            queryReturned.forEach((bookObj) => {
+              queryReturnedKeyValueStore[bookObj.id] = bookObj;
+            });
+            queryReturned.forEach((bookObj) => {
+              if (shelfKeyValueStore[bookObj.id]) {
+                removeTheseBooks.push(bookObj.id);
+              }
+            });
+            removeTheseBooks.forEach(bookId => {
+              delete queryReturnedKeyValueStore[bookId];
+            });
+            Object.keys(queryReturnedKeyValueStore).forEach(key => {
+              queryReturnedUpdated.push(queryReturnedKeyValueStore[key]);
+            });
+            this.setState({searchResults: queryReturnedUpdated});
             break;
           default:
             this.setState({searchResults: []});
@@ -170,7 +196,7 @@ class BooksApp4 extends Component {
               changeBookshelf={this.changeBookshelf}
               selectedValue='read'
             />
-            <SearchButton resetSearch={this.resetSearch}/>
+              <SearchButton resetSearch={this.resetSearch}/>
           </div>
         )}/>
       </div>

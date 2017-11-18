@@ -13,7 +13,6 @@ const SearchBookRow = function(props) {
             <div className="bookshelf-books">
               <ol className="books-grid">
                 {props.shelf.map(book => {
-                    if (book.imageLinks) {
                       return (
                         <li key={book.id}>
                         <div className="book">
@@ -22,7 +21,12 @@ const SearchBookRow = function(props) {
                               style={{
                                 width: 128,
                                 height: 193,
-                                backgroundImage: `url(${book.imageLinks.thumbnail})`
+                                backgroundImage:
+                                  (
+                                    `url(
+                                      ${(book.imageLinks && book.imageLinks.thumbnail) ||
+                                      ("http://via.placeholder.com/128x193")})`
+                                  )
                               }}
                             ></div>
                             <div className="book-shelf-changer">
@@ -47,40 +51,7 @@ const SearchBookRow = function(props) {
                           </div>
                         </div>
                       </li>
-                      )
-                    }
-                    else {
-                      return (
-                        <li key={book.id}>
-                        <div className="book">
-                          <div className="book-top">
-                            <div className="book-cover"
-                              style={{
-                                width: 128,
-                                height: 193,
-                                backgroundImage: `url(http://via.placeholder.com/128x193)`
-                              }}
-                            ></div>
-                            <div className="book-shelf-changer">
-                              <select
-                                onChange={props.changeBookshelf}
-                                value={props.selectedValue}
-                                data={book.id}
-                              >
-                                <option value="none" disabled>Move to...</option>
-                                <option value=""></option>
-                                <option value="currentlyReading">Currently Reading</option>
-                                <option value="wantToRead">Want to Read</option>
-                                <option value="read">Read</option>
-                              </select>
-                            </div>
-                          </div>
-                          <div className="book-title">{book.title}</div>
-                          <div className="book-authors">{book.author}</div>
-                        </div>
-                      </li>
-                      )
-                    }
+                    )
                 })}
               </ol>
             </div>

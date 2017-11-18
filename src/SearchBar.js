@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
+// import { Debounce } from 'react-throttle';
 import './App.css';
 
 class SearchBar extends Component {
@@ -27,12 +28,12 @@ class SearchBar extends Component {
             to="/"
           >Close</Link>
           <div className="search-books-input-wrapper">
-            <input
-              type="text"
-              value={this.state.query}
-              placeholder="Search by title or author"
-              onChange={this.handleChange}
-            />
+              <input
+                type="text"
+                value={this.state.query}
+                placeholder="Search by title or author"
+                onChange={this.handleChange}
+              />
           </div>
         </div>
         <div className="search-books-results">

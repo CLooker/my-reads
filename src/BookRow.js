@@ -13,46 +13,46 @@ const BookRow = function(props) {
             <div className="bookshelf-books">
               <ol className="books-grid">
                 {props.shelf.map(book => {
-
-                      return (
-                        <li key={book.id}>
-                        <div className="book">
-                          <div className="book-top">
-                            <div className="book-cover"
-                              style={{
-                                width: 128,
-                                height: 193,
-                                backgroundImage:
-                                  (
-                                    `url(
-                                      ${(book.imageLinks && book.imageLinks.thumbnail) ||
-                                      ("http://via.placeholder.com/128x193")})`
-                                  )
-                              }}
-                            ></div>
-                            <div className="book-shelf-changer">
-                              <select
-                                onChange={props.changeBookshelf}
-                                value={props.selectedValue}
-                                data={book.id}
-                              >
-                                <option value="none" disabled>Move to...</option>
-                                <option value="currentlyReading">Currently Reading</option>
-                                <option value="wantToRead">Want to Read</option>
-                                <option value="read">Read</option>
-                                <option value="none">None</option>
-                              </select>
-                            </div>
+                  return (
+                    <li key={book.id}>
+                      <div className="book">
+                        <div className="book-top">
+                          <div className="book-cover"
+                            style={{
+                              width: 128,
+                              height: 193,
+                              backgroundImage:
+                                (`url(
+                                    ${(book.imageLinks && book.imageLinks.thumbnail) ||
+                                    ("http://via.placeholder.com/128x193")}
+                                  )`
+                                )
+                            }}>
                           </div>
-                          <div className="book-title">{book.title}</div>
-                          <div className="book-authors">
-                            {book.authors && book.authors.map((author)=> {
-                              return (<div key={author + Math.random()}>{author}</div>)
-                            })}
+                          <div className="book-shelf-changer">
+                            <select
+                              onChange={props.changeBookshelf}
+                              value={props.selectedValue}
+                              data={book.id}
+                            >
+                              <option value="none" disabled>Move to...</option>
+                              {props.displaySearch && <option value=""></option>}
+                              <option value="currentlyReading">Currently Reading</option>
+                              <option value="wantToRead">Want to Read</option>
+                              <option value="read">Read</option>
+                              {props.displaySearch || <option value="none">None</option>}
+                              </select>
                           </div>
                         </div>
-                      </li>
-                    )
+                        <div className="book-title">{book.title}</div>
+                        <div className="book-authors">
+                          {book.authors && book.authors.map((author)=> {
+                            return (<div key={author + Math.random()}>{author}</div>)
+                            })}
+                        </div>
+                      </div>
+                    </li>
+                  )
                 })}
               </ol>
             </div>

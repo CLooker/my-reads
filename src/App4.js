@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import { Route } from 'react-router-dom';
 import * as BooksAPI from './BooksAPI';
 import BookRow from './BookRow';
-import SearchResultBookRow from './SearchResultBookRow';
 import SearchButton from './SearchButton';
 import SearchBar from './SearchBar';
 import './App.css';
@@ -20,25 +19,47 @@ class BooksApp4 extends Component {
     }
   }
 
-  getShelfAndRender = () => {
-      BooksAPI.getAll().then((booksReturn) => {
-        this.setState({
-          shelf: booksReturn.map(b => {
-            return b;
-          }),
-          currentlyReading: booksReturn.filter(b => {
-            return b.shelf === 'currentlyReading';
-          }),
-          wantToRead: booksReturn.filter(b => {
-            return b.shelf === 'wantToRead';
-          }),
-          read: booksReturn.filter(b => {
-            return b.shelf === 'read';
-          })
-        });
-        console.log('this.state after setState:', this.state);
+  setStateOnApiReturn = (apiReturn) => {
+    if (Array.isArray(apiReturn)) {
+      this.setState({
+        shelf: apiReturn.map(book => {
+          return book;
+        }),
+        currentlyReading: apiReturn.filter(book => {
+          return book.shelf === 'currentlyReading';
+        }),
+        wantToRead: apiReturn.filter(book => {
+          return book.shelf === 'wantToRead';
+        }),
+        read: apiReturn.filter(book => {
+          return book.shelf === 'read';
+        })
       });
     }
+    else {
+      let shelfKeyValueStore = {};
+      this.state.shelf.forEach((bookObj) => {
+        shelfKeyValueStore[bookObj.id] = bookObj;
+      });
+      this.setState({
+        currentlyReading: apiReturn.currentlyReading.map(bookId => {
+          return shelfKeyValueStore[bookId];
+        }),
+        wantToRead: apiReturn.wantToRead.map(bookId => {
+          return shelfKeyValueStore[bookId];
+        }),
+        read: apiReturn.read.map(bookId => {
+          return shelfKeyValueStore[bookId];
+        })
+      });
+    }
+  }
+
+  getShelfAndRender = () => {
+    BooksAPI.getAll().then(booksReturn => {
+      this.setStateOnApiReturn(booksReturn);
+    });
+  }
 
   componentDidMount() {
     this.getShelfAndRender();
@@ -46,47 +67,8 @@ class BooksApp4 extends Component {
 
   changeBookshelf = (e) => {
     BooksAPI.update( {id: e.currentTarget.getAttribute('data')}, e.target.value)
-    .then((updatedShelf) => {
-      let currentlyReadingTemp = [],
-          wantToReadTemp = [],
-          readTemp = [],
-          shelfKeyValueStore = {};
-      this.state.shelf.forEach((bookObj) => {
-         shelfKeyValueStore[bookObj.id] = bookObj;
-      });
-      let bookIdMatrix = [
-        updatedShelf.currentlyReading,
-        updatedShelf.wantToRead,
-        updatedShelf.read
-      ];
-      bookIdMatrix.forEach(
-        (bookIdArr, index) => {
-          switch(index) {
-            case 0:
-              bookIdArr.forEach(bookId => {
-                currentlyReadingTemp.push(shelfKeyValueStore[bookId]);
-              });
-              break;
-            case 1:
-              bookIdArr.forEach(bookId => {
-                wantToReadTemp.push(shelfKeyValueStore[bookId]);
-              });
-              break;
-            case 2:
-              bookIdArr.forEach(bookId => {
-                readTemp.push(shelfKeyValueStore[bookId]);
-              });
-              break;
-            default:
-              break;
-          }
-        }
-      );
-      this.setState({
-        currentlyReading: currentlyReadingTemp,
-        wantToRead: wantToReadTemp,
-        read: readTemp
-      });
+    .then((apiReturn) => {
+      this.setStateOnApiReturn(apiReturn);
     });
   }
 
@@ -102,34 +84,42 @@ class BooksApp4 extends Component {
     if (query) {
       BooksAPI.search(query).then(queryReturned => {
         switch(queryReturned.error || queryReturned !== undefined) {
-
           case queryReturned.error:
             this.setState({searchResults: []});
             break;
-
+          // After my first submission, the feedback was that
+          // books that are in a user's bookshelf should not
+          // show up in search results.
+          // After my second submission, the feedback was the
+          // the opposite. So, depending on what you think is
+          // required, I left the code that would filter out
+          // the user's books from showing up in the search
+          // results.
+          // The version you're interacting with is not removing
+          // user book's from the serach results.
           case queryReturned !== undefined:
-            let shelfKeyValueStore = {},
-                queryReturnedKeyValueStore = {},
-                removeTheseBooks = [],
-                queryReturnedUpdated = [];
-            this.state.shelf.forEach((bookObj) => {
-               shelfKeyValueStore[bookObj.id] = bookObj;
-            });
-            queryReturned.forEach((bookObj) => {
-              queryReturnedKeyValueStore[bookObj.id] = bookObj;
-            });
-            queryReturned.forEach((bookObj) => {
-              if (shelfKeyValueStore[bookObj.id]) {
-                removeTheseBooks.push(bookObj.id);
-              }
-            });
-            removeTheseBooks.forEach(bookId => {
-              delete queryReturnedKeyValueStore[bookId];
-            });
-            Object.keys(queryReturnedKeyValueStore).forEach(key => {
-              queryReturnedUpdated.push(queryReturnedKeyValueStore[key]);
-            });
-            this.setState({searchResults: queryReturnedUpdated});
+            // let shelfKeyValueStore = {},
+            //     queryReturnedKeyValueStore = {},
+            //     removeTheseBooks = [],
+            //     queryReturnedUpdated = [];
+            // this.state.shelf.forEach((bookObj) => {
+            //    shelfKeyValueStore[bookObj.id] = bookObj;
+            // });
+            // queryReturned.forEach((bookObj) => {
+            //   queryReturnedKeyValueStore[bookObj.id] = bookObj;
+            // });
+            // queryReturned.forEach((bookObj) => {
+            //   if (shelfKeyValueStore[bookObj.id]) {
+            //     removeTheseBooks.push(bookObj.id);
+            //   }
+            // });
+            // removeTheseBooks.forEach(bookId => {
+            //   delete queryReturnedKeyValueStore[bookId];
+            // });
+            // Object.keys(queryReturnedKeyValueStore).forEach(key => {
+            //   queryReturnedUpdated.push(queryReturnedKeyValueStore[key]);
+            // });
+            this.setState({searchResults: queryReturned});
             break;
           default:
             this.setState({searchResults: []});
@@ -151,11 +141,12 @@ class BooksApp4 extends Component {
               closeSearch={this.closeSearch}
               search={this.search}
             />
-            <SearchResultBookRow
+            <BookRow
               myReads=""
               shelfTitle="Search Results"
               shelf={this.state.searchResults}
               changeBookshelf={this.changeBookshelf}
+              displaySearch={true}
               selectedValue=''
             />
           </div>
@@ -183,7 +174,7 @@ class BooksApp4 extends Component {
               changeBookshelf={this.changeBookshelf}
               selectedValue='read'
             />
-              <SearchButton resetSearch={this.resetSearch}/>
+            <SearchButton resetSearch={this.resetSearch}/>
           </div>
         )}/>
       </div>

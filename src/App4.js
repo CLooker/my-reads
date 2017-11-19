@@ -20,8 +20,12 @@ class BooksApp4 extends Component {
   }
 
   setStateOnApiReturn = (apiReturn) => {
+    // BooksApi.getAll returns an array
+    // this block deals with that response
     if (Array.isArray(apiReturn)) {
       this.setState({
+        // all of our books in one array
+        // we will use it to build our key-value store, later
         shelf: apiReturn.map(book => {
           return book;
         }),
@@ -36,7 +40,14 @@ class BooksApp4 extends Component {
         })
       });
     }
+    // BooksApi.update returns an object
+    // this block deals with that response
     else {
+      // create an object whose keys are book Id's
+      // and whose values are the entire book object related to that Id
+      // BooksApi.update returns an object composed of arrays that contain bookId's
+      // our key-value store allows us to directly grab book objects
+      // instead of looping over apiReturn over and over and over
       let shelfKeyValueStore = {};
       this.state.shelf.forEach((bookObj) => {
         shelfKeyValueStore[bookObj.id] = bookObj;
@@ -65,6 +76,9 @@ class BooksApp4 extends Component {
     this.getShelfAndRender();
   }
 
+  // each book resides in an <li> that possesses a key whose value is that book's id
+  // we are grabbing that id as well as the option-value selected
+  // this info allows us to communicate to the api our book-shelf change
   changeBookshelf = (e) => {
     BooksAPI.update( {id: e.currentTarget.getAttribute('data')}, e.target.value)
     .then((apiReturn) => {
@@ -72,10 +86,14 @@ class BooksApp4 extends Component {
     });
   }
 
+  // when we click the back arrow on our search component
   closeSearch = function(){
     this.getShelfAndRender();
   }
 
+  // without setting state here,
+  // if we go back and forth between our root page and search
+  // our previous search result would persist
   resetSearch = () => {
     this.setState({searchResults: []});
   }
@@ -142,6 +160,8 @@ class BooksApp4 extends Component {
               closeSearch={this.closeSearch}
               search={this.search}
             />
+            {/*The displaySearch attribute allows us to re-use the BookRow component
+            due to its ability to render our page differently for search results.*/}
             <BookRow
               myReads=""
               shelfTitle="Search Results"

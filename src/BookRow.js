@@ -36,6 +36,8 @@ const BookRow = function(props) {
                               data={book.id}
                             >
                               <option value="none" disabled>Move to...</option>
+                              {/*here displaySearch being true/false short-circuits
+                              for some conditional rendering*/}
                               {props.displaySearch && <option value=""></option>}
                               <option value="currentlyReading">Currently Reading</option>
                               <option value="wantToRead">Want to Read</option>

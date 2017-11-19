@@ -22,34 +22,21 @@ class BooksApp4 extends Component {
 
   getShelfAndRender = () => {
       BooksAPI.getAll().then((booksReturn) => {
-        let shelfTemp = [],
-            currentlyReadingTemp = [],
-            wantToReadTemp = [],
-            readTemp = [];
-        booksReturn.forEach(bookObj => {
-          switch (bookObj.shelf) {
-            case "currentlyReading":
-              shelfTemp.push(bookObj);
-              currentlyReadingTemp.push(bookObj);
-              break;
-            case "wantToRead":
-              shelfTemp.push(bookObj);
-              wantToReadTemp.push(bookObj);
-              break;
-            case "read":
-              shelfTemp.push(bookObj);
-              readTemp.push(bookObj);
-              break;
-            default:
-              break;
-          }
-        });
         this.setState({
-          shelf: shelfTemp,
-          currentlyReading: currentlyReadingTemp,
-          wantToRead: wantToReadTemp,
-          read: readTemp
+          shelf: booksReturn.map(b => {
+            return b;
+          }),
+          currentlyReading: booksReturn.filter(b => {
+            return b.shelf === 'currentlyReading';
+          }),
+          wantToRead: booksReturn.filter(b => {
+            return b.shelf === 'wantToRead';
+          }),
+          read: booksReturn.filter(b => {
+            return b.shelf === 'read';
+          })
         });
+        console.log('this.state after setState:', this.state);
       });
     }
 

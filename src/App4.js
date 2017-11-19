@@ -119,6 +119,7 @@ class BooksApp4 extends Component {
             // Object.keys(queryReturnedKeyValueStore).forEach(key => {
             //   queryReturnedUpdated.push(queryReturnedKeyValueStore[key]);
             // });
+            // this.setState({searchResults: queryReturnedUpdated});
             this.setState({searchResults: queryReturned});
             break;
           default:

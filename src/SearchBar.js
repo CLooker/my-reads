@@ -1,38 +1,27 @@
-import React, { Component } from 'react';
+import React from 'react';
 import { Link } from 'react-router-dom';
-// import { Debounce } from 'react-throttle';
+import { DebounceInput } from 'react-debounce-input';
 import './App.css';
 
-class SearchBar extends Component {
-
-  state = {
-    query: ''
-  }
-
-  componentDidMount() {
-    this.setState({query: ''});
-  }
-
-  handleChange = (event) => {
-    this.setState({query: event.target.value});
-    this.props.search(event.target.value);
-  }
-
-  render() {
+const SearchBar = function(props) {
     return (
       <div className="search-books">
         <div className="search-books-bar">
           <Link
             className="close-search"
-            onClick={this.props.closeSearch}
+            onClick={props.closeSearch}
             to="/"
-          >Close</Link>
+          >
+            Close
+          </Link>
           <div className="search-books-input-wrapper">
-              <input
+              <DebounceInput
+                minLength={1}
+                debounceTimeout={300}
                 type="text"
-                value={this.state.query}
+                value={props.query}
                 placeholder="Search by title or author"
-                onChange={this.handleChange}
+                onChange={props.handleChange}
               />
           </div>
         </div>
@@ -41,7 +30,6 @@ class SearchBar extends Component {
         </div>
       </div>
     )
-  }
 }
 
 export default SearchBar;

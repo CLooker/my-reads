@@ -32,18 +32,16 @@ const BookRow = function(props) {
                           <div className="book-shelf-changer">
                             <select
                               onChange={props.changeBookshelf}
-                              value={props.selectedValue}
+                              value={book.selectedValue || " "}
                               data={book.id}
                             >
                               <option value="none" disabled>Move to...</option>
-                              {/*here displaySearch being true/false short-circuits
-                              for some conditional rendering*/}
-                              {props.displaySearch && <option value=""></option>}
+                              {props.displaySearch && <option value=" "></option>}
                               <option value="currentlyReading">Currently Reading</option>
                               <option value="wantToRead">Want to Read</option>
                               <option value="read">Read</option>
-                              {props.displaySearch || <option value="none">None</option>}
-                              </select>
+                              {book.shelf && <option value="none">None</option>}
+                            </select>
                           </div>
                         </div>
                         <div className="book-title">{book.title}</div>

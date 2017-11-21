@@ -107,8 +107,7 @@ class BooksApp4 extends Component {
             break;
           default:
             this.setState({
-              searchResults: [],
-              searchResultsKeyValueStore: {}
+              searchResults: []
             });
             break;
         }

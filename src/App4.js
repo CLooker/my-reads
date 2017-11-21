@@ -94,9 +94,7 @@ class BooksApp4 extends Component {
       BooksAPI.search(query).then(queryReturned => {
         switch(queryReturned.error || queryReturned !== undefined) {
           case queryReturned.error:
-            this.setState({
-              searchResults: []
-            });
+            this.resetSearch();
             break;
           case queryReturned !== undefined:
             this.setState({
@@ -106,15 +104,13 @@ class BooksApp4 extends Component {
             });
             break;
           default:
-            this.setState({
-              searchResults: []
-            });
+            this.resetSearch();
             break;
         }
       });
     }
     else {
-      this.setState({searchResults: []});
+      this.resetSearch();
     }
   }
 

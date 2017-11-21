@@ -33,16 +33,15 @@ class BooksApp4 extends Component {
 
   setStateOnApiReturn = (apiReturn) => {
     if (Array.isArray(apiReturn)) {
-      const shelfKeyValueStore = {};
-      apiReturn.forEach(book => {
-          shelfKeyValueStore[book.id] = book;
-          shelfKeyValueStore[book.id].selectedValue = book.shelf;
-      });
       this.setState({
         shelf: apiReturn.map(book => {
           return book;
         }),
-        shelfKeyValueStore: shelfKeyValueStore,
+        shelfKeyValueStore: apiReturn.reduce((keyValueStore, book) => {
+          keyValueStore[book.id] = book;
+          keyValueStore[book.id].selectedValue = book.shelf;
+          return keyValueStore;
+        }, {}),
         currentlyReading: apiReturn.filter(book => {
           return book.shelf === 'currentlyReading';
         }),

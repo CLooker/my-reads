@@ -38,7 +38,7 @@ const Book = (props) => {
         <div className="book-title">{book.title}</div>
         <div className="book-authors">
           {book.authors && book.authors.map((author)=> {
-            return (<div key={author + Math.random()}>{author}</div>)
+            return (<div key={`${author}${book.id}`.replace(/\s/g, '')}>{author}</div>)
           })}
         </div>
       </div>

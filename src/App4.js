@@ -1,9 +1,10 @@
 import React, { Component } from 'react';
-import { Route } from 'react-router-dom';
+import { Route, Switch } from 'react-router-dom';
 import * as BooksAPI from './BooksAPI';
 import BookRow from './BookRow';
 import SearchButton from './SearchButton';
 import SearchBar from './SearchBar';
+import NoMatch from './NoMatch';
 import './App.css';
 
 class BooksApp4 extends Component {
@@ -116,6 +117,7 @@ class BooksApp4 extends Component {
   render() {
     return (
       <div className="app">
+        <Switch>
         <Route path="/search" render={() => (
           <div>
             <SearchBar
@@ -161,6 +163,10 @@ class BooksApp4 extends Component {
             <SearchButton resetSearch={this.resetSearch}/>
           </div>
         )}/>
+        <Route render ={() => (
+          <NoMatch />
+        )}/>
+      </Switch>
       </div>
     )
   }

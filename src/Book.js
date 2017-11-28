@@ -13,10 +13,11 @@ const Book = (props) => {
             	height: 193,
             	backgroundImage:
     	        	(`url(
-                	${(book.imageLinks && book.imageLinks.thumbnail) ||
-                	("http://via.placeholder.com/128x193")}
-              	)`
-            	)
+                	${
+                		(book.imageLinks && book.imageLinks.thumbnail) ||
+                		(encodeURI((`http://via.placeholder.com/128x193?text=${book.title.toUpperCase()}`)))
+                	}
+              	)`)
           	}}>
         	</div>
         	<div className="book-shelf-changer">

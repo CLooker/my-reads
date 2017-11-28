@@ -21,6 +21,7 @@ const BookRow = function(props) {
                     <Book
                       book={book}
                       changeBookshelf={props.changeBookshelf}
+                      displaySearch={props.displaySearch}
                     />
                   </li>
                 )

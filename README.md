@@ -1,6 +1,6 @@
 # MyReads Project
 This is the final project for the React Fundamentals course, which is a part of Udacity's React Nanodegree Program.
-It allows the user to store books and add new books to different lists, such as a currently reading list, want to read list, or read list.
+It allows the user to manipulate three "bookshelves"; a "currently reading" shelf, a "want to read" shelf, and a "read" shelf. The user can search for new books to add, change the shelf a book is on, or remove a book from being a part of any shelf.
 
 ### Quickstart
 Install the project dependencies using `npm install` or `yarn install`.

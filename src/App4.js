@@ -163,7 +163,7 @@ class BooksApp4 extends Component {
             <SearchButton resetSearch={this.resetSearch}/>
           </div>
         )}/>
-        <Route render ={() => (
+        <Route render={() => (
           <NoMatch />
         )}/>
       </Switch>

@@ -7,9 +7,9 @@ MyReads allows the user to manipulate three "bookshelves"; a "currently reading"
 Install the project dependencies using `npm install` or `yarn install`.
 Get the project running with `npm start` or `yarn start`.
 
-Search for books by clicking the add button (bottom right hand corner).
+Each book component has a button that exposes a dropdown menu that lists bookshelf options. The shelf that book is currently on will be highligted. Choosing any other shelf will move that book to the selected shelf.
 
-A search bar will render. Search for books and each book that appears will have a button that exposes a dropdown menu that contains bookshelf options. Placing a book into a bookshelf will update the state of that shelf in real time. You can also return to the root directory of the app and see your newly added books and from there change their respective shelves.
+Search for books by clicking the add button (bottom, right corner). A search bar will render. If you choose to add a book to a shelf, this will update the state of that shelf in real time. You can also return to the root directory and see your newly added books.
 
 ### Important
 The backend API uses a fixed set of cached search results and is limited to a particular set of search terms, which can be found in [SEARCH_TERMS.md](SEARCH_TERMS.md). That list of terms are the _only_ terms that will work with the backend, so don't be surprised if your searches for Basket Weaving or Bubble Wrap don't come back with any results.

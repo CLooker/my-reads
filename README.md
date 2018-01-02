@@ -5,7 +5,7 @@ MyReads allows the user to manipulate three "bookshelves"; a "currently reading"
 
 ### Quickstart
 Install the project dependencies using `npm install` or `yarn install`.
-Get the project running with `npm start` or `yarn`.
+Get the project running with `npm start` or `yarn` while in the root directory.
 
 Each book component has a button that exposes a dropdown menu that lists bookshelf options. The shelf that book is currently on will be highligted. Choosing any other shelf will move that book to the selected shelf.
 

@@ -4,8 +4,8 @@ This is the final project for the React Fundamentals Course, which is a part of 
 MyReads allows the user to manipulate three "bookshelves"; a "currently reading" shelf, a "want to read" shelf, and a "read" shelf. The user can search for new books to add, change the shelf a book is on, or remove a book from being a part of any shelf.
 
 ### Quickstart
-Install the project dependencies using `npm install` or `yarn install`.
-Get the project running with `npm start` or `yarn` while in the root directory.
+Install the project dependencies using `npm install` or `yarn`.
+Get the project running with `npm start` or `yarn start` while in the root directory.
 
 Each book component has a button that exposes a dropdown menu that lists bookshelf options. The shelf that book is currently on will be highligted. Choosing any other shelf will move that book to the selected shelf.
 

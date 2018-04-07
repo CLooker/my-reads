@@ -124,8 +124,6 @@ class BooksApp4 extends Component {
                   handleChange={this.handleChange}
                   query={this.state.query}
                 />
-                {/*The displaySearch attribute allows us to re-use the BookRow component
-            due to its ability to render our page differently for search results.*/}
                 <BookRow
                   myReads=""
                   shelfTitle="Search Results"

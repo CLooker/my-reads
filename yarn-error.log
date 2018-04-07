@@ -1,0 +1,48 @@
+Arguments: 
+  /usr/bin/node /home/clooker/.yarn/bin/yarn.js upgrade
+
+PATH: 
+  /home/clooker/.yarn/bin:/home/clooker/.config/yarn/global/node_modules/.bin:/home/clooker/.rvm/gems/ruby-2.4.1/bin:/home/clooker/.rvm/gems/ruby-2.4.1@global/bin:/home/clooker/.rvm/rubies/ruby-2.4.1/bin:/home/linuxbrew/.linuxbrew/bin:/home/linuxbrew/.linuxbrew/bin:/home/clooker/bin:/home/clooker/.local/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin:/home/clooker/.rvm/bin:/home/clooker/.rvm/bin
+
+Yarn version: 
+  1.5.1
+
+Node version: 
+  8.9.4
+
+Platform: 
+  linux x64
+
+npm manifest: 
+  {
+    "dependencies": {
+      "prop-types": "^15.5.8",
+      "react": "^16.1.1",
+      "react-debounce-input": "^3.1.0",
+      "react-dom": "^16.1.1",
+      "react-router-dom": "^4.2.2",
+      "react-throttle": "^0.3.0",
+      "underscore": "^1.8.3"
+    },
+    "devDependencies": {
+      "react-scripts": "0.9.5"
+    },
+    "scripts": {
+      "start": "react-scripts start",
+      "build": "react-scripts build",
+      "test": "react-scripts test --env=jsdom",
+      "eject": "react-scripts eject"
+    }
+  }
+
+yarn manifest: 
+  No manifest
+
+Lockfile: 
+  No lockfile
+
+Trace: 
+  Error: No lockfile in this directory. Run `yarn install` to generate one.
+      at new MessageError (/home/clooker/.yarn/lib/cli.js:186:110)
+      at /home/clooker/.yarn/lib/cli.js:89389:13
+      at <anonymous>

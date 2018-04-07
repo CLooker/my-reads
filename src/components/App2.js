@@ -3,10 +3,11 @@ import { Route, Switch } from 'react-router-dom';
 import * as BooksAPI from './BooksAPI';
 import BookRow from './BookRow';
 import SearchButton from './SearchButton';
-// import SearchBar from './SearchBar';
 import SearchView from './SearchView';
 import NoMatch from './NoMatch';
 import '../App.css';
+
+// fix http problem from thumbnail images
 
 export default class App2 extends Component {
   state = {
@@ -110,7 +111,7 @@ export default class App2 extends Component {
                   {...this.returnMyReadsProps('Want To Read', routeProps)}
                 />
                 <BookRow {...this.returnMyReadsProps('Read', routeProps)} />
-                <SearchButton resetSearch={this.resetSearch} />
+                <SearchButton resetSearch={this.resetSearch} {...routeProps} />
               </div>
             )}
           />

@@ -1,4 +1,6 @@
 {
+  "name": "my-reads",
+  "version": "0.1.0",
   "homepage": "https://clooker.github.io/my-reads",
   "dependencies": {
     "prop-types": "^15.5.8",

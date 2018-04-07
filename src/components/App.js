@@ -5,65 +5,59 @@ import BookRow from './BookRow';
 import SearchButton from './SearchButton';
 import SearchBar from './SearchBar';
 import NoMatch from './NoMatch';
-import './App.css';
+import '../App.css';
 
-class BooksApp4 extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      query: '',
-      shelf: [],
-      shelfKeyValueStore: {},
-      currentlyReading: [],
-      wantToRead: [],
-      read: [],
-      searchResults: []
-    };
-  }
+export default class App extends Component {
+  state = {
+    query: '',
+    shelf: [],
+    shelfKeyValueStore: {},
+    currentlyReading: [],
+    wantToRead: [],
+    read: [],
+    searchResults: []
+  };
 
   componentDidMount() {
     this.getShelfAndRender();
   }
 
-  getShelfAndRender = () => {
-    BooksAPI.getAll().then(booksReturn => {
-      this.setStateOnApiReturn(booksReturn);
-    });
-  };
+  getShelfAndRender = () => BooksAPI.getAll().then(this.setStateOnApiReturn);
 
-  setStateOnApiReturn = apiReturn => {
-    if (Array.isArray(apiReturn)) {
-      this.setState({
-        shelf: apiReturn.map(book => {
-          return book;
-        }),
-        shelfKeyValueStore: apiReturn.reduce((keyValueStore, book) => {
-          keyValueStore[book.id] = book;
-          keyValueStore[book.id].selectedValue = book.shelf;
-          return keyValueStore;
-        }, {}),
-        currentlyReading: apiReturn.filter(book => {
-          return book.shelf === 'currentlyReading';
-        }),
-        wantToRead: apiReturn.filter(book => {
-          return book.shelf === 'wantToRead';
-        }),
-        read: apiReturn.filter(book => {
-          return book.shelf === 'read';
-        })
-      });
-    } else {
-      this.getShelfAndRender();
-    }
-  };
+  setStateOnApiReturn = apiReturn =>
+    Array.isArray(apiReturn)
+      ? this.buildState(apiReturn)
+      : this.getShelfAndRender();
+
+  buildState = apiReturn =>
+    this.setState({
+      shelf: apiReturn,
+      shelfKeyValueStore: this.buildKVS(apiReturn),
+      currentlyReading: this.buildShelfTypes(apiReturn, 'currentlyReading'),
+      wantToRead: this.buildShelfTypes(apiReturn, 'wantToRead'),
+      read: this.buildShelfTypes(apiReturn, 'read')
+    });
+
+  buildKVS = apiReturn =>
+    apiReturn.reduce(
+      (keyValueStore, book) => ({
+        ...keyValueStore,
+        [book.id]: book
+      }),
+      {}
+    );
+
+  buildShelfTypes = (apiReturn, type) =>
+    apiReturn.filter(({ shelf }) => shelf === type);
 
   changeBookshelf = e => {
-    const bookId = e.currentTarget.getAttribute('data'),
-      newShelf = e.target.value.trim();
+    const id = e.currentTarget.getAttribute('data');
+    const newShelf = e.target.value.trim();
+
     if (newShelf !== '') {
-      BooksAPI.update({ id: bookId }, newShelf).then(apiReturn => {
+      BooksAPI.update({ id }, newShelf).then(apiReturn => {
         this.setStateOnApiReturn(apiReturn);
-        if (window.location.href.indexOf('search') !== -1) {
+        if (this.props.location.pathname.includes('search')) {
           this.getShelfAndRender();
           this.search(this.state.query);
         }
@@ -71,44 +65,33 @@ class BooksApp4 extends Component {
     }
   };
 
-  closeSearch = function() {
-    this.getShelfAndRender();
-  };
+  closeSearch = () => this.getShelfAndRender();
 
-  resetSearch = () => {
-    this.setState({
-      searchResults: []
-    });
-  };
+  resetSearch = () => this.setState({ searchResults: [] });
 
   handleChange = event => {
     this.setState({ query: event.target.value });
     this.search(event.target.value);
   };
 
-  search = query => {
-    if (query) {
-      BooksAPI.search(query).then(queryReturned => {
-        switch (queryReturned.error || queryReturned !== undefined) {
-          case queryReturned.error:
-            this.resetSearch();
-            break;
-          case queryReturned !== undefined:
-            this.setState({
-              searchResults: queryReturned.map(bookObj => {
-                return this.state.shelfKeyValueStore[bookObj.id] || bookObj;
-              })
-            });
-            break;
-          default:
-            this.resetSearch();
-            break;
-        }
-      });
-    } else {
-      this.resetSearch();
-    }
-  };
+  search = query =>
+    query
+      ? BooksAPI.search(query).then(queryReturned => {
+          switch (queryReturned.error || queryReturned !== undefined) {
+            case queryReturned.error:
+              return this.resetSearch();
+            case queryReturned !== undefined:
+              return this.setState({
+                searchResults: queryReturned.map(
+                  bookObj =>
+                    this.state.shelfKeyValueStore[bookObj.id] || bookObj
+                )
+              });
+            default:
+              return this.resetSearch();
+          }
+        })
+      : this.resetSearch();
 
   render() {
     return (
@@ -116,7 +99,7 @@ class BooksApp4 extends Component {
         <Switch>
           <Route
             path="/my-reads/search"
-            render={() => (
+            render={routeProps => (
               <div>
                 <SearchBar
                   closeSearch={this.closeSearch}
@@ -130,6 +113,7 @@ class BooksApp4 extends Component {
                   shelf={this.state.searchResults}
                   changeBookshelf={this.changeBookshelf}
                   displaySearch={true}
+                  {...routeProps}
                 />
               </div>
             )}
@@ -137,7 +121,7 @@ class BooksApp4 extends Component {
           <Route
             exact
             path="/my-reads"
-            render={() => (
+            render={routeProps => (
               <div>
                 <BookRow
                   myReads="MyReads"
@@ -145,6 +129,7 @@ class BooksApp4 extends Component {
                   shelf={this.state.currentlyReading}
                   changeBookshelf={this.changeBookshelf}
                   selectedValue="currentlyReading"
+                  {...routeProps}
                 />
                 <BookRow
                   myReads=""
@@ -152,6 +137,7 @@ class BooksApp4 extends Component {
                   shelf={this.state.wantToRead}
                   changeBookshelf={this.changeBookshelf}
                   selectedValue="wantToRead"
+                  {...routeProps}
                 />
                 <BookRow
                   myReads=""
@@ -159,16 +145,15 @@ class BooksApp4 extends Component {
                   shelf={this.state.read}
                   changeBookshelf={this.changeBookshelf}
                   selectedValue="read"
+                  {...routeProps}
                 />
                 <SearchButton resetSearch={this.resetSearch} />
               </div>
             )}
           />
-          <Route render={() => <NoMatch />} />
+          <Route component={NoMatch} />
         </Switch>
       </div>
     );
   }
 }
-
-export default BooksApp4;

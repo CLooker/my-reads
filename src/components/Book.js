@@ -1,9 +1,7 @@
 import React from 'react';
 
-const Book = props => {
-  const { book, changeBookshelf, displaySearch } = props;
-  const { imageLinks } = book;
-  const { imageLinks: { thumbnail }, title, id, shelf, authors } = book;
+const Book = ({ book, changeBookshelf, displaySearch }) => {
+  const { title, id, shelf, authors } = book;
   return (
     <div>
       <div className="book">
@@ -12,7 +10,7 @@ const Book = props => {
             className="book-cover"
             style={{
               backgroundImage: `url(
-                  ${(imageLinks && thumbnail) ||
+                  ${(book.imageLinks && book.imageLinks.thumbnail) ||
                     encodeURI(
                       `https://via.placeholder.com/128x193?text=${title.toUpperCase()}`
                     )}

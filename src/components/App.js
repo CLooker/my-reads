@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Route, Switch } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import * as BooksAPI from './BooksAPI';
 import SearchView from './SearchView';
 import CurrentBookCollectionView from './CurrentBookCollectionView';
@@ -19,7 +19,9 @@ export default class App extends Component {
     this.getShelfAndRender();
   }
 
-  getShelfAndRender = () => BooksAPI.getAll().then(this.setStateOnApiReturn);
+  getShelfAndRender() {
+    BooksAPI.getAll().then(this.setStateOnApiReturn);
+  }
 
   setStateOnApiReturn = apiReturn =>
     Array.isArray(apiReturn)
@@ -93,26 +95,28 @@ export default class App extends Component {
 
   render() {
     return (
-      <div className="app">
-        <Switch>
-          <Route
-            path="/my-reads/search"
-            render={routeProps => (
-              <SearchView {...this.returnSearchViewProps(routeProps)} />
-            )}
-          />
-          <Route
-            exact
-            path="/my-reads"
-            render={routeProps => (
-              <CurrentBookCollectionView
-                {...this.returnCurrentBookCollectionViewProps(routeProps)}
-              />
-            )}
-          />
-          <Route component={NoMatch} />
-        </Switch>
-      </div>
+      <Router>
+        <div className="app">
+          <Switch>
+            <Route
+              path="/my-reads/search"
+              render={routeProps => (
+                <SearchView {...this.returnSearchViewProps(routeProps)} />
+              )}
+            />
+            <Route
+              exact
+              path="/my-reads"
+              render={routeProps => (
+                <CurrentBookCollectionView
+                  {...this.returnCurrentBookCollectionViewProps(routeProps)}
+                />
+              )}
+            />
+            <Route component={NoMatch} />
+          </Switch>
+        </div>
+      </Router>
     );
   }
 }

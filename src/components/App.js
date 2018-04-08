@@ -50,6 +50,7 @@ export default class App extends Component {
     apiReturn.filter(({ shelf }) => shelf === type);
 
   changeBookshelf = e =>
+    console.log('changeBookshelf called') ||
     BooksAPI.update(
       { id: e.currentTarget.getAttribute('data') },
       e.target.value.trim()

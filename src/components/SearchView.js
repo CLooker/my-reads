@@ -58,7 +58,6 @@ export default class SearchView extends Component {
   });
 
   returnBookRowProps = () => ({
-    myReads: '',
     shelfTitle: 'Search Results',
     shelf: this.state.searchResults,
     changeBookshelf: this.changeBookshelf,

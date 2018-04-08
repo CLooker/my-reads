@@ -5,9 +5,8 @@ import SearchView from './SearchView';
 import CurrentBookCollectionView from './CurrentBookCollectionView';
 import NoMatch from './NoMatch';
 import '../App.css';
-// maybe use loading spinner until bookshelf changes state
 
-export default class App2 extends Component {
+export default class App extends Component {
   state = {
     shelf: [],
     shelfKeyValueStore: {},

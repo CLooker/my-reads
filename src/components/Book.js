@@ -10,7 +10,11 @@ const Book = ({ book, changeBookshelf, displaySearch }) => {
             className="book-cover"
             style={{
               backgroundImage: `url(
-                  ${(book.imageLinks && book.imageLinks.thumbnail) ||
+                  ${(book.imageLinks &&
+                    `${book.imageLinks.thumbnail.slice(
+                      0,
+                      4
+                    )}s${book.imageLinks.thumbnail.slice(4)}`) ||
                     encodeURI(
                       `https://via.placeholder.com/128x193?text=${title.toUpperCase()}`
                     )}
@@ -22,7 +26,7 @@ const Book = ({ book, changeBookshelf, displaySearch }) => {
               <option value="none" disabled>
                 Move to...
               </option>
-              {displaySearch && <option value=" " />}
+              {displaySearch && <option value=" " disabled />}
               <option value="currentlyReading">Currently Reading</option>
               <option value="wantToRead">Want to Read</option>
               <option value="read">Read</option>

@@ -8,6 +8,7 @@ import NoMatch from './NoMatch';
 import '../App.css';
 
 // fix http problem from thumbnail images
+// maybe use loading spinner until bookshelf changes state
 
 export default class App2 extends Component {
   state = {
@@ -39,13 +40,27 @@ export default class App2 extends Component {
     });
 
   buildKVS = apiReturn =>
-    apiReturn.reduce(
-      (keyValueStore, book) => ({
-        ...keyValueStore,
-        [book.id]: book
-      }),
-      {}
-    );
+    apiReturn
+      .map(book => ({
+        ...book,
+        imageLinks: {
+          smallThumbnail: `${book.imageLinks.smallThumbnail.slice(
+            0,
+            4
+          )}s${book.imageLinks.smallThumbnail.slice(4)}`,
+          thumbnail: `${book.imageLinks.thumbnail.slice(
+            0,
+            4
+          )}s${book.imageLinks.thumbnail.slice(4)}`
+        }
+      }))
+      .reduce(
+        (keyValueStore, book) => ({
+          ...keyValueStore,
+          [book.id]: book
+        }),
+        {}
+      );
 
   buildShelfTypes = (apiReturn, type) =>
     apiReturn.filter(({ shelf }) => shelf === type);

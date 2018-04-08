@@ -14,7 +14,7 @@ const Book = ({ book, changeBookshelf, displaySearch }) => {
                     `${book.imageLinks.thumbnail.slice(
                       0,
                       4
-                    )}s${book.imageLinks.thumbnail.slice(4)}`) ||
+                    )}s${book.imageLinks.thumbnail.slice(5)}`) ||
                     encodeURI(
                       `https://via.placeholder.com/128x193?text=${title.toUpperCase()}`
                     )}

@@ -47,11 +47,11 @@ export default class App2 extends Component {
           smallThumbnail: `${book.imageLinks.smallThumbnail.slice(
             0,
             4
-          )}s${book.imageLinks.smallThumbnail.slice(4)}`,
+          )}s${book.imageLinks.smallThumbnail.slice(5)}`,
           thumbnail: `${book.imageLinks.thumbnail.slice(
             0,
             4
-          )}s${book.imageLinks.thumbnail.slice(4)}`
+          )}s${book.imageLinks.thumbnail.slice(5)}`
         }
       }))
       .reduce(

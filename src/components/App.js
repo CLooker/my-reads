@@ -40,27 +40,13 @@ export default class App2 extends Component {
     });
 
   buildKVS = apiReturn =>
-    apiReturn
-      .map(book => ({
-        ...book,
-        imageLinks: {
-          smallThumbnail: `${book.imageLinks.smallThumbnail.slice(
-            0,
-            4
-          )}s${book.imageLinks.smallThumbnail.slice(5)}`,
-          thumbnail: `${book.imageLinks.thumbnail.slice(
-            0,
-            4
-          )}s${book.imageLinks.thumbnail.slice(5)}`
-        }
-      }))
-      .reduce(
-        (keyValueStore, book) => ({
-          ...keyValueStore,
-          [book.id]: book
-        }),
-        {}
-      );
+    apiReturn.reduce(
+      (keyValueStore, book) => ({
+        ...keyValueStore,
+        [book.id]: book
+      }),
+      {}
+    );
 
   buildShelfTypes = (apiReturn, type) =>
     apiReturn.filter(({ shelf }) => shelf === type);

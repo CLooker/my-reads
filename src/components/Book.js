@@ -10,11 +10,7 @@ const Book = ({ book, changeBookshelf, displaySearch }) => {
             className="book-cover"
             style={{
               backgroundImage: `url(
-                  ${(book.imageLinks &&
-                    `${book.imageLinks.thumbnail.slice(
-                      0,
-                      4
-                    )}s${book.imageLinks.thumbnail.slice(5)}`) ||
+                  ${(book.imageLinks && book.imageLinks.thumbnail) ||
                     encodeURI(
                       `https://via.placeholder.com/128x193?text=${title.toUpperCase()}`
                     )}

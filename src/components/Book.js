@@ -12,7 +12,7 @@ const returnImageAddress = book =>
         `https://via.placeholder.com/128x193?text=${book.title.toUpperCase()}`
       );
 
-const returnSelectValue = shelf => (shelf ? true : ' ');
+const returnSelectValue = shelf => (shelf ? shelf : ' ');
 
 const Book = ({ book, changeBookshelf, displaySearch }) => {
   const { title, id, shelf, authors } = book;

@@ -66,7 +66,6 @@ export default class SearchView extends Component {
   });
 
   render() {
-    console.log(this.state.searchResults);
     return (
       <div>
         <SearchBar {...this.returnSearchBarProps()} />

@@ -1,13 +1,10 @@
 import React, { Component } from 'react';
 import { Route, Switch } from 'react-router-dom';
 import * as BooksAPI from './BooksAPI';
-import BookRow from './BookRow';
-import SearchButton from './SearchButton';
 import SearchView from './SearchView';
+import CurrentBookCollectionView from './CurrentBookCollectionView';
 import NoMatch from './NoMatch';
 import '../App.css';
-
-// fix http problem from thumbnail images
 // maybe use loading spinner until bookshelf changes state
 
 export default class App2 extends Component {
@@ -90,6 +87,11 @@ export default class App2 extends Component {
             ...routeProps
           };
 
+  returnCurrentBookCollectionViewProps = routeProps => ({
+    returnMyReadsProps: this.returnMyReadsProps,
+    ...routeProps
+  });
+
   render() {
     return (
       <div className="app">
@@ -104,16 +106,9 @@ export default class App2 extends Component {
             exact
             path="/my-reads"
             render={routeProps => (
-              <div>
-                <BookRow
-                  {...this.returnMyReadsProps('Currently Reading', routeProps)}
-                />
-                <BookRow
-                  {...this.returnMyReadsProps('Want To Read', routeProps)}
-                />
-                <BookRow {...this.returnMyReadsProps('Read', routeProps)} />
-                <SearchButton resetSearch={this.resetSearch} {...routeProps} />
-              </div>
+              <CurrentBookCollectionView
+                {...this.returnCurrentBookCollectionViewProps(routeProps)}
+              />
             )}
           />
           <Route component={NoMatch} />

@@ -38,7 +38,7 @@ export default class SearchView extends Component {
       e.target.value.trim()
     )
       .then(this.asyncApiReturn)
-      .then(() => this.search(this.state.query));
+      .then(() => this.asyncSearch(this.state.query));
 
   handleChange = e =>
     this.setState({ query: e.target.value }, () =>

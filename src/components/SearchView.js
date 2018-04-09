@@ -16,8 +16,6 @@ export default class SearchView extends Component {
     return null;
   }
 
-  closeSearch = () => this.getShelfAndRender();
-
   resetSearch = () => this.setState({ searchResults: [] });
 
   search = query =>
@@ -26,13 +24,14 @@ export default class SearchView extends Component {
       : this.resetSearch();
 
   handleSearchReturn = res =>
-    res !== undefined
+    console.log('search returned this: ', res) ||
+    (res !== undefined
       ? this.setState({
           searchResults: res.map(
             bookObj => this.props.shelfKeyValueStore[bookObj.id] || bookObj
           )
         })
-      : this.resetSearch();
+      : this.resetSearch());
 
   changeBookshelf = e =>
     BooksAPI.update(
@@ -53,7 +52,6 @@ export default class SearchView extends Component {
     await this.props.setStateOnApiReturn(apiReturn);
 
   returnSearchBarProps = () => ({
-    closeSearch: this.closeSearch,
     search: this.search,
     handleChange: this.handleChange,
     query: this.query
@@ -67,6 +65,10 @@ export default class SearchView extends Component {
   });
 
   render() {
+    console.log(
+      'this.props.shelfKeyValueStore: ',
+      this.props.shelfKeyValueStore
+    );
     return (
       <div>
         <SearchBar {...this.returnSearchBarProps()} />

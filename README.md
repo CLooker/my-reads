@@ -13,6 +13,8 @@ Check out the <a href="https://clooker.github.io/my-reads/">deployed site</a>.
 Install the project dependencies using `npm install` or `yarn`.
 Get the project running with `npm start` or `yarn start` while in the root directory.
 
+Add `/my-reads` to the pathname to get started.
+
 Each book component has a button that exposes a dropdown menu that lists bookshelf options. The shelf that book is currently on will be highligted. Choosing any other shelf will move that book to the selected shelf.
 
 Search for books by clicking the add button (bottom, right corner). A search bar will render. If you choose to add a book to a shelf, this will update the state of that shelf in real time. You can also return to the root directory and see your newly added books.

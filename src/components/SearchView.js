@@ -9,26 +9,28 @@ export default class SearchView extends Component {
     searchResults: []
   };
 
+  static deriveStateFromProps(nextProps, prevState) {
+    console.log('Search View deriveStateFromProps');
+    console.log('nextProps: ', nextProps);
+    console.log('prevState: ', prevState);
+    return null;
+  }
+
   closeSearch = () => this.getShelfAndRender();
 
   resetSearch = () => this.setState({ searchResults: [] });
 
   search = query =>
     query
-      ? BooksAPI.search(query).then(queryReturned => {
-          switch (queryReturned.error || queryReturned !== undefined) {
-            case queryReturned.error:
-              return this.resetSearch();
-            case queryReturned !== undefined:
-              return this.setState({
-                searchResults: queryReturned.map(
-                  bookObj =>
-                    this.props.shelfKeyValueStore[bookObj.id] || bookObj
-                )
-              });
-            default:
-              return this.resetSearch();
-          }
+      ? BooksAPI.search(query).then(this.handleSearchReturn)
+      : this.resetSearch();
+
+  handleSearchReturn = res =>
+    res !== undefined
+      ? this.setState({
+          searchResults: res.map(
+            bookObj => this.props.shelfKeyValueStore[bookObj.id] || bookObj
+          )
         })
       : this.resetSearch();
 

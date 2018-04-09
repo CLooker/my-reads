@@ -29,6 +29,7 @@ export default class App extends Component {
       : this.getShelfAndRender();
 
   buildState = apiReturn =>
+    console.log('App buildState called') ||
     this.setState({
       shelf: apiReturn,
       shelfKeyValueStore: this.buildKVS(apiReturn),
@@ -50,7 +51,6 @@ export default class App extends Component {
     apiReturn.filter(({ shelf }) => shelf === type);
 
   changeBookshelf = e =>
-    console.log('changeBookshelf called') ||
     BooksAPI.update(
       { id: e.currentTarget.getAttribute('data') },
       e.target.value.trim()

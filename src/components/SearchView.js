@@ -9,13 +9,6 @@ export default class SearchView extends Component {
     searchResults: []
   };
 
-  static deriveStateFromProps(nextProps, prevState) {
-    console.log('Search View deriveStateFromProps');
-    console.log('nextProps: ', nextProps);
-    console.log('prevState: ', prevState);
-    return null;
-  }
-
   resetSearch = () => this.setState({ searchResults: [] });
 
   search = query =>
@@ -65,16 +58,10 @@ export default class SearchView extends Component {
   });
 
   render() {
-    console.log(
-      'this.props.shelfKeyValueStore: ',
-      this.props.shelfKeyValueStore
-    );
-    let x = this.returnBookRowProps();
-    console.log('book row props passed: ', x);
     return (
       <div>
         <SearchBar {...this.returnSearchBarProps()} />
-        <BookRow {...x} />
+        <BookRow {...this.returnBookRowProps()} />
       </div>
     );
   }

@@ -29,7 +29,6 @@ export default class App extends Component {
       : this.getShelfAndRender();
 
   buildState = apiReturn =>
-    console.log('App buildState called') ||
     this.setState({
       shelf: apiReturn,
       shelfKeyValueStore: this.buildKVS(apiReturn),

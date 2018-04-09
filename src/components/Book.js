@@ -47,11 +47,7 @@ export default class Book extends Component {
               }}
             />
             <div className="book-shelf-changer">
-              <select
-                onChange={changeBookshelf}
-                value={this.returnSelectValue(shelf)}
-                data={id}
-              >
+              <select onChange={changeBookshelf} value={shelf || ' '} data={id}>
                 <option value="none" disabled>
                   Move to...
                 </option>

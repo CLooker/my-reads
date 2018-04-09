@@ -69,10 +69,12 @@ export default class SearchView extends Component {
       'this.props.shelfKeyValueStore: ',
       this.props.shelfKeyValueStore
     );
+    let x = this.returnBookRowProps();
+    console.log('book row props passed: ', x);
     return (
       <div>
         <SearchBar {...this.returnSearchBarProps()} />
-        <BookRow {...this.returnBookRowProps()} />
+        <BookRow {...x} />
       </div>
     );
   }

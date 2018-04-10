@@ -2,8 +2,48 @@ import React, { Component } from 'react';
 import SearchBar from './SearchBar';
 import BookRow from './BookRow';
 import * as BooksAPI from './BooksAPI';
+import PropTypes from 'prop-types';
 
 export default class SearchView extends Component {
+  static propTypes = {
+    shelfKeyValueStore: PropTypes.object.isRequired,
+    setStateOnApiReturn: PropTypes.func.isRequired,
+    getShelfAndRender: PropTypes.func.isRequired
+  };
+
+  static getDerivedStateFromProps(nextProps, prevState) {
+    let flag = false;
+    const newSearchResults = Object.keys(nextProps.shelfKeyValueStore)
+      .map(key => nextProps.shelfKeyValueStore[key])
+      .map(book => {
+        const target = book.id;
+        const match = prevState.searchResults.find(({ id }) => id === target);
+        if (match) {
+          if (match.shelf !== target.shelf) {
+            flag = true;
+          }
+        }
+        return book;
+      });
+
+    if (flag === true) {
+      return {
+        query: prevState.query,
+        searchResults: prevState.searchResults.map(book => {
+          const target = book.id;
+          const newVersion = newSearchResults.find(({ id }) => id === target);
+          if (newVersion) {
+            return newVersion;
+          } else {
+            return book;
+          }
+        })
+      };
+    } else {
+      return null;
+    }
+  }
+
   state = {
     query: '',
     searchResults: []
@@ -30,24 +70,16 @@ export default class SearchView extends Component {
     BooksAPI.update(
       { id: e.currentTarget.getAttribute('data') },
       e.target.value.trim()
-    )
-      .then(this.asyncApiReturn)
-      .then(() => this.asyncSearch(this.state.query));
+    ).then(this.props.setStateOnApiReturn);
 
   handleChange = e =>
     this.setState({ query: e.target.value }, () =>
-      this.asyncSearch(this.state.query)
+      this.search(this.state.query)
     );
 
-  asyncSearch = async query => await this.search(query);
-
-  asyncApiReturn = async apiReturn =>
-    await this.props.setStateOnApiReturn(apiReturn);
-
   returnSearchBarProps = () => ({
-    search: this.search,
     handleChange: this.handleChange,
-    query: this.query
+    query: this.state.query
   });
 
   returnBookRowProps = () => ({

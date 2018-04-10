@@ -1,5 +1,6 @@
 import React from 'react';
 import Book from './Book';
+import PropTypes from 'prop-types';
 
 const BookRow = ({
   myReads,
@@ -32,5 +33,13 @@ const BookRow = ({
     </div>
   </div>
 );
+
+BookRow.propTypes = {
+  myReads: PropTypes.string,
+  shelfTitle: PropTypes.string.isRequired,
+  shelf: PropTypes.array.isRequired,
+  changeBookshelf: PropTypes.func.isRequired,
+  displaySearch: PropTypes.bool
+};
 
 export default BookRow;

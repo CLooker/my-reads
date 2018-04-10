@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import SearchBar from './SearchBar';
 import BookRow from './BookRow';
 import * as BooksAPI from './BooksAPI';
+import SearchViewDiffer from '../utils/SearchViewDiffer.js';
 import PropTypes from 'prop-types';
 
 export default class SearchView extends Component {
@@ -12,36 +13,7 @@ export default class SearchView extends Component {
   };
 
   static getDerivedStateFromProps(nextProps, prevState) {
-    let flag = false;
-    const newSearchResults = Object.keys(nextProps.shelfKeyValueStore)
-      .map(key => nextProps.shelfKeyValueStore[key])
-      .map(book => {
-        const target = book.id;
-        const match = prevState.searchResults.find(({ id }) => id === target);
-        if (match) {
-          if (match.shelf !== target.shelf) {
-            flag = true;
-          }
-        }
-        return book;
-      });
-
-    if (flag === true) {
-      return {
-        query: prevState.query,
-        searchResults: prevState.searchResults.map(book => {
-          const target = book.id;
-          const newVersion = newSearchResults.find(({ id }) => id === target);
-          if (newVersion) {
-            return newVersion;
-          } else {
-            return book;
-          }
-        })
-      };
-    } else {
-      return null;
-    }
+    return SearchViewDiffer(nextProps, prevState);
   }
 
   state = {
@@ -57,14 +29,13 @@ export default class SearchView extends Component {
       : this.resetSearch();
 
   handleSearchReturn = res =>
-    console.log('search returned this: ', res) ||
-    (res !== undefined
+    res
       ? this.setState({
           searchResults: res.map(
             bookObj => this.props.shelfKeyValueStore[bookObj.id] || bookObj
           )
         })
-      : this.resetSearch());
+      : this.resetSearch();
 
   changeBookshelf = e =>
     BooksAPI.update(

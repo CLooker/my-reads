@@ -7,7 +7,15 @@ ShallowWrapper {
   Symbol(enzyme.__unrendered__): <SearchView
     getShelfAndRender={[MockFunction]}
     setStateOnApiReturn={[MockFunction]}
-    shelfKeyValueStore={Object {}}
+    shelfKeyValueStore={
+      Object {
+        "def": Object {
+          "id": "def",
+          "shelf": "currentlyReading",
+          "title": "fake title 2",
+        },
+      }
+    }
   />,
   Symbol(enzyme.__renderer__): Object {
     "batchedUpdates": [Function],

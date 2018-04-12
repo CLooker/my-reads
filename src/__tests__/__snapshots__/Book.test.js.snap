@@ -1,0 +1,329 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Book initialization code paths \`displaySearch\` code paths \`displaySearch\` is falsy prop should render properly 1`] = `
+<div>
+  <div
+    className="book"
+  >
+    <div
+      className="book-top"
+    >
+      <div
+        className="book-cover"
+        style={
+          Object {
+            "backgroundImage": "url(https://fake.com)",
+          }
+        }
+      />
+      <div
+        className="book-shelf-changer"
+      >
+        <select
+          data="123"
+          onChange={[MockFunction]}
+          value="currentlyReading"
+        >
+          <option
+            disabled={true}
+            value="none"
+          >
+            Move to...
+          </option>
+          <option
+            value="currentlyReading"
+          >
+            Currently Reading
+          </option>
+          <option
+            value="wantToRead"
+          >
+            Want to Read
+          </option>
+          <option
+            value="read"
+          >
+            Read
+          </option>
+          <option
+            value="none"
+          >
+            None
+          </option>
+        </select>
+      </div>
+    </div>
+    <div
+      className="book-title"
+    >
+      fake title
+    </div>
+    <div
+      className="book-authors"
+    >
+      <div
+        key="me123"
+      >
+        me
+      </div>
+      <div
+        key="myself123"
+      >
+        myself
+      </div>
+      <div
+        key="andI123"
+      >
+        and I
+      </div>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`Book initialization code paths \`displaySearch\` code paths \`displaySearch\` is truthy prop should render properly 1`] = `
+<div>
+  <div
+    className="book"
+  >
+    <div
+      className="book-top"
+    >
+      <div
+        className="book-cover"
+        style={
+          Object {
+            "backgroundImage": "url(https://fake.com)",
+          }
+        }
+      />
+      <div
+        className="book-shelf-changer"
+      >
+        <select
+          data="123"
+          onChange={[MockFunction]}
+          value="currentlyReading"
+        >
+          <option
+            disabled={true}
+            value="none"
+          >
+            Move to...
+          </option>
+          <option
+            disabled={true}
+            value=" "
+          />
+          <option
+            value="currentlyReading"
+          >
+            Currently Reading
+          </option>
+          <option
+            value="wantToRead"
+          >
+            Want to Read
+          </option>
+          <option
+            value="read"
+          >
+            Read
+          </option>
+          <option
+            value="none"
+          >
+            None
+          </option>
+        </select>
+      </div>
+    </div>
+    <div
+      className="book-title"
+    >
+      fake title
+    </div>
+    <div
+      className="book-authors"
+    >
+      <div
+        key="me123"
+      >
+        me
+      </div>
+      <div
+        key="myself123"
+      >
+        myself
+      </div>
+      <div
+        key="andI123"
+      >
+        and I
+      </div>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`Book initialization code paths \`shelf\` code paths \`shelf\` is falsy prop should render properly 1`] = `
+<div>
+  <div
+    className="book"
+  >
+    <div
+      className="book-top"
+    >
+      <div
+        className="book-cover"
+        style={
+          Object {
+            "backgroundImage": "url(https://fake.com)",
+          }
+        }
+      />
+      <div
+        className="book-shelf-changer"
+      >
+        <select
+          data="123"
+          onChange={[MockFunction]}
+          value="currentlyReading"
+        >
+          <option
+            disabled={true}
+            value="none"
+          >
+            Move to...
+          </option>
+          <option
+            value="currentlyReading"
+          >
+            Currently Reading
+          </option>
+          <option
+            value="wantToRead"
+          >
+            Want to Read
+          </option>
+          <option
+            value="read"
+          >
+            Read
+          </option>
+          <option
+            value="none"
+          >
+            None
+          </option>
+        </select>
+      </div>
+    </div>
+    <div
+      className="book-title"
+    >
+      fake title
+    </div>
+    <div
+      className="book-authors"
+    >
+      <div
+        key="me123"
+      >
+        me
+      </div>
+      <div
+        key="myself123"
+      >
+        myself
+      </div>
+      <div
+        key="andI123"
+      >
+        and I
+      </div>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`Book initialization code paths \`shelf\` code paths \`shelf\` is truthy prop should render properly 1`] = `
+<div>
+  <div
+    className="book"
+  >
+    <div
+      className="book-top"
+    >
+      <div
+        className="book-cover"
+        style={
+          Object {
+            "backgroundImage": "url(https://fake.com)",
+          }
+        }
+      />
+      <div
+        className="book-shelf-changer"
+      >
+        <select
+          data="123"
+          onChange={[MockFunction]}
+          value="currentlyReading"
+        >
+          <option
+            disabled={true}
+            value="none"
+          >
+            Move to...
+          </option>
+          <option
+            value="currentlyReading"
+          >
+            Currently Reading
+          </option>
+          <option
+            value="wantToRead"
+          >
+            Want to Read
+          </option>
+          <option
+            value="read"
+          >
+            Read
+          </option>
+          <option
+            value="none"
+          >
+            None
+          </option>
+        </select>
+      </div>
+    </div>
+    <div
+      className="book-title"
+    >
+      fake title
+    </div>
+    <div
+      className="book-authors"
+    >
+      <div
+        key="me123"
+      >
+        me
+      </div>
+      <div
+        key="myself123"
+      >
+        myself
+      </div>
+      <div
+        key="andI123"
+      >
+        and I
+      </div>
+    </div>
+  </div>
+</div>
+`;

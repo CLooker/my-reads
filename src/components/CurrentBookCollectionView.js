@@ -13,7 +13,10 @@ const CurrentBookCollectionView = ({ returnMyReadsProps, ...routeProps }) => (
 );
 
 CurrentBookCollectionView.propTypes = {
-  returnMyReadsProps: PropTypes.func.isRequired
+  returnMyReadsProps: PropTypes.func.isRequired,
+  match: PropTypes.object.isRequired,
+  location: PropTypes.object.isRequired,
+  history: PropTypes.object.isRequired
 };
 
 export default CurrentBookCollectionView;

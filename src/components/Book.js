@@ -1,6 +1,13 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 
 export default class Book extends Component {
+  static propTypes = {
+    book: PropTypes.object.isRequired,
+    changeBookshelf: PropTypes.func.isRequired,
+    displaySearch: PropTypes.bool
+  };
+
   returnImageAddress = book =>
     this.checkForImageLinks(book)
       ? this.convertToHttps(book.imageLinks.thumbnail)
@@ -13,12 +20,12 @@ export default class Book extends Component {
 
   returnPlaceHolder = title =>
     encodeURI(
-      `https://via.placeholder.com/128x193/000000/ffffff?text=${this.checkForTitleLength(
+      `https://via.placeholder.com/128x193/000000/ffffff?text=${this.returnFormattedTitle(
         title
       )}`
     );
 
-  checkForTitleLength = title =>
+  returnFormattedTitle = title =>
     title.length <= 10
       ? title.toUpperCase()
       : `${title.toUpperCase().slice(0, 9)}...`;
@@ -26,7 +33,7 @@ export default class Book extends Component {
   returnSelectValue = shelf => (shelf ? shelf : ' ');
 
   checkForAuthors = (authors, id) =>
-    authors && this.returnAuthorsEl(authors, id);
+    authors ? this.returnAuthorsEl(authors, id) : false;
 
   returnAuthorsEl = (authors, id) =>
     authors.map(author => (

@@ -1,3 +1,4 @@
+import 'jest-enzyme';
 import requestAnimationFrame from './tempPolyfills';
 
 import { configure } from 'enzyme';

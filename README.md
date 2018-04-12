@@ -21,7 +21,7 @@ Search for books by clicking the add button (bottom, right corner). A search bar
 
 ### Jest
 
-I am starting to add tests. If you want to run them, while in the root directory, type `npm test` or `yarn test`.
+I have added a full suite of tests. If you want to run them, while in the root directory, type `npm test` or `yarn test`.
 
 ### Important
 

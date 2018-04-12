@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import SearchBar from './SearchBar';
 import BookRow from './BookRow';
 import * as BooksAPI from './BooksAPI';
-import SearchViewDiffer from '../utils/SearchViewDiffer.js';
+import searchViewDiffer from '../utils/searchViewDiffer.js';
 import PropTypes from 'prop-types';
 
 export default class SearchView extends Component {
@@ -13,7 +13,7 @@ export default class SearchView extends Component {
   };
 
   static getDerivedStateFromProps(nextProps, prevState) {
-    return SearchViewDiffer(nextProps, prevState);
+    return searchViewDiffer(nextProps, prevState);
   }
 
   state = {
@@ -29,7 +29,7 @@ export default class SearchView extends Component {
       : this.resetSearch();
 
   handleSearchReturn = res =>
-    res
+    Array.isArray(res)
       ? this.setState({
           searchResults: res.map(
             bookObj => this.props.shelfKeyValueStore[bookObj.id] || bookObj

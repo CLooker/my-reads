@@ -20,7 +20,9 @@ export default class App extends Component {
   }
 
   getShelfAndRender() {
-    BooksAPI.getAll().then(this.setStateOnApiReturn);
+    BooksAPI.getAll()
+      .then(this.setStateOnApiReturn)
+      .catch(console.error);
   }
 
   setStateOnApiReturn = apiReturn =>
@@ -53,7 +55,9 @@ export default class App extends Component {
     BooksAPI.update(
       { id: e.currentTarget.getAttribute('data') },
       e.target.value.trim()
-    ).then(this.setStateOnApiReturn);
+    )
+      .then(this.setStateOnApiReturn)
+      .catch(console.error);
 
   returnSearchViewProps = routeProps => ({
     shelfKeyValueStore: this.state.shelfKeyValueStore,

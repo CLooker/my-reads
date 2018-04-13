@@ -16,13 +16,13 @@ export const get = bookId =>
   fetch(`${api}/books/${bookId}`, { headers })
     .then(res => res.json())
     .then(data => data.book)
-    .catch(err => console.log(err));
+    .catch(console.error);
 
 export const getAll = () =>
   fetch(`${api}/books`, { headers })
     .then(res => res.json())
     .then(data => data.books)
-    .catch(err => console.log(err));
+    .catch(console.error);
 
 export const update = (book, shelf) =>
   fetch(`${api}/books/${book.id}`, {
@@ -34,7 +34,7 @@ export const update = (book, shelf) =>
     body: JSON.stringify({ shelf })
   })
     .then(res => res.json())
-    .catch(err => console.log(err));
+    .catch(console.error);
 
 export const search = (query, maxResults) =>
   fetch(`${api}/search`, {
@@ -47,4 +47,4 @@ export const search = (query, maxResults) =>
   })
     .then(res => res.json())
     .then(data => data.books)
-    .catch(err => console.log(err));
+    .catch(console.error);

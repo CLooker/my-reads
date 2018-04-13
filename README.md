@@ -23,6 +23,8 @@ Search for books by clicking the add button (bottom, right corner). A search bar
 
 I have added a full suite of tests. If you want to run them, while in the root directory, type `npm test` or `yarn test`.
 
+You can also generate a code coverage report. While in the root directory, type `npm run test:coverage` or `yarn run test:coverage`. A code coverage report will be created right in the CLI. Also, a coverage folder will be created in the root. Navigate inside of it to the `lcov-report` directory. Right click on the `index.html` file and open it in a browser.
+
 ### Important
 
 The backend API uses a fixed set of cached search results and is limited to a particular set of search terms, which can be found in [SEARCH_TERMS.md](SEARCH_TERMS.md). That list of terms are the _only_ terms that will work with the backend, so don't be surprised if your searches for Basket Weaving or Bubble Wrap don't come back with any results.

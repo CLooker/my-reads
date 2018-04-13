@@ -6,8 +6,6 @@ import CurrentBookCollectionView from './CurrentBookCollectionView';
 import NoMatch from './NoMatch';
 import '../App.css';
 
-// should add footer linking to github etc
-
 export default class App extends Component {
   state = {
     shelf: [],
